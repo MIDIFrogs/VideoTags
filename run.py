@@ -23,7 +23,10 @@ def processVideo(path: str, title: str, description: str) -> list[str]:
         if (tag[0] in topTags.keys()):
             topTags[tag] += tag[1]
         topTags[tag] = tag[1]
-    return tags
+    topTags = [(v, k) for (k, v) in topTags]
+    topTags.sort()
+    topTags.reverse()
+    return [t[1] for t in topTags[:3]]
 
 
 def process(file: str, videoDir: str, output: str) -> None:
