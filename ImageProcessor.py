@@ -32,13 +32,15 @@ def predict(videoPath: str, labels: list[str]) -> list[tuple[str, float]]:
         frame -= mean
 
         preds = model.predict(np.expand_dims(frame, axis=0))[0]
-        predictionStats[preds] = (predictionStats[preds][0] + 1, preds)
+        i = np.argmax(preds)
+        predictionStats[i] = (predictionStats[i][0] + 1, i)
         # Добавить куда-то в счётчик
-    s = sum(predictionStats)
+    s = sum(x[0] for x in predictionStats)
     predictionStats.sort()
     predictionStats.reverse()
     
     results = []
     for i in range(3): 
         stats = predictionStats[i]
-        results.append((lb[stats[1]], stats[0] / s))
+        results.append((labels[lb.classes_[stats[1]]], stats[0] / s))
+    return results
