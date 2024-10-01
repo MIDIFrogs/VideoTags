@@ -163,3 +163,4 @@ cython_debug/
 
 temp/
 sample_submission.csv
+*.pdf
